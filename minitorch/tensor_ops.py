@@ -281,25 +281,6 @@ def tensor_map(
         out_index: Index = np.array(out_shape)
         in_index: Index = np.array(in_shape)
 
-        # # Simple version
-        # if np.array_equal(out_shape, in_shape):
-        #     for i in range(len(out)):
-        #         out[i] = fn(in_storage[i])
-        # # Broadcasted version
-        # else:
-        #     for i in range(len(out)):
-        #         # convert ordinal into index in out_shape
-        #         to_index(i, out_shape, out_index)
-
-        #         # broadcast the smaller in_index to the bigger out_index
-        #         broadcast_index(out_index, out_shape, in_shape, in_index)
-
-        #         # find the position of the out_index and the in_index in storage
-        #         out_pos = index_to_position(out_index, out_strides) # TODO: is this just i?
-        #         in_pos = index_to_position(in_index, in_strides)
-
-        #         out[out_pos] = fn(in_storage[in_pos])
-
         for i in range(len(out)):
             # convert ordinal into index in out_shape
             to_index(i, out_shape, out_index)
@@ -364,30 +345,6 @@ def tensor_zip(
             or len(b_shape) > MAX_DIMS
         ):
             raise ValueError("Input or Output dimension exceeds maximum dimension")
-
-        # # Simple version
-        # if np.array_equal(out_shape, a_shape): # TODO: is this condition sufficient?
-        #     for i in range(len(out)):
-        #         out[i] = fn(a_storage[i], b_storage[i])
-        # # Broadcast version
-        # else:
-        #     out_index: Index = np.array(out_shape)
-        #     a_index: Index = np.array(a_shape)
-        #     b_index: Index = np.array(b_shape)
-        #     for i in range(len(out)):
-        #         # convert ordinal into index in out_shape
-        #         to_index(i, out_shape, out_index)
-
-        #         # broadcast the a_index and b_index to out_index
-        #         broadcast_index(out_index, out_shape, a_shape, a_index)
-        #         broadcast_index(out_index, out_shape, b_shape, b_index)
-
-        #         # find the position of the indecies in storage
-        #         out_pos = index_to_position(out_index, out_strides)
-        #         a_pos = index_to_position(a_index, a_strides)
-        #         b_pos = index_to_position(b_index, b_strides)
-
-        #         out[out_pos] = fn(a_storage[a_pos], b_storage[b_pos])
 
         out_index: Index = np.array(out_shape)
         a_index: Index = np.array(a_shape)
